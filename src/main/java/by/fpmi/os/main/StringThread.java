@@ -1,33 +1,33 @@
 package by.fpmi.os.main;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class StringThread extends Thread {
 
-    private final List<String> strings;
-    private final int begin;
+    private final List<String> result = new ArrayList<>();
+    private Map<String, Integer> stringsWithFrequency = new HashMap<>();
 
-    public StringThread(List<String>strings, int begin) {
-        this.strings = strings;
-        this.begin = begin;
+    public StringThread(Map<String, Integer> stringsWithFrequency) {
+        this.stringsWithFrequency = stringsWithFrequency;
     }
-
 
     @Override
     public void run() {
-        strings = new ArrayList<>();
-        List<Entry<String, Integer>> list = new ArrayList<>(result.entrySet());
-        list.sort(Entry.comparingByValue((a, b) -> b - a));
-        for (Entry<String, Integer> entry : list) {
-            strings.add(entry.getKey());
+        List<Entry<String, Integer>> list = new ArrayList<>(stringsWithFrequency.entrySet());
+        list.sort((a, b) -> b.getValue() - a.getValue());
+        for (Entry<String, Integer> element : list) {
+            result.add(element.getKey());
         }
     }
 
-    public List<String, Integer> getFrequentStrings(int n) {
-        if(n >= strings.size()){
-            return strings;
+    public List<String> getFrequentStrings(int n) {
+        if (n >= result.size()) {
+            return result;
         }
-       return strings.subList(0, n);
+        return result.subList(0, n);
     }
 }

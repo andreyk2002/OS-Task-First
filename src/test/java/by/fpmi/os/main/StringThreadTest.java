@@ -12,30 +12,28 @@ public class StringThreadTest {
 
 
     @Test
-    public void testRunShouldSortSingleElementListByFrequency(){
-        Map<String, Integer> frequencyMap = new HashMap<>();
-        frequencyMap.put("a", 1);
-        StringThread thread = new StringThread(frequencyMap);
+    public void testRunShouldSortSingleElementListByFrequency() {
+
+        StringThread thread = new StringThread(SINGLE_ELEMENT, 0, SINGLE_ELEMENT.size());
         thread.run();
 
-        List<String> result = thread.getFrequentStrings(1);
-        List<String> expected = Collections.singletonList("a");
+        List<Map.Entry<String, Integer>> result = thread.getStringsWithFrequency(1);
+        List<Map.Entry<String, Integer>> expected = Collections.singletonList(new AbstractMap.SimpleEntry<>("a", 1));
 
         Assert.assertEquals(result, expected);
     }
 
     @Test
     public void testRunShouldSortListByFrequency() {
-        Map<String, Integer> frequencyMap = new HashMap<>();
-        frequencyMap.put("a", 1);
-        frequencyMap.put("b", 2);
-        frequencyMap.put("c", 3);
-        frequencyMap.put("d", 4);
-        StringThread thread = new StringThread(frequencyMap);
+
+        StringThread thread = new StringThread(TEST_STRINGS, 0, TEST_STRINGS.size());
         thread.run();
 
-        List<String> result = thread.getFrequentStrings(2);
-        List<String> expected = Arrays.asList("d", "c");
+        List<Map.Entry<String, Integer>> result = thread.getStringsWithFrequency(2);
+        List<Map.Entry<String, Integer>> expected = Arrays.asList(
+                new AbstractMap.SimpleEntry<>("c", 3),
+                new AbstractMap.SimpleEntry<>("b", 2)
+        );
 
         Assert.assertEquals(result, expected);
     }

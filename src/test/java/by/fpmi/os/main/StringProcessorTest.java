@@ -27,4 +27,17 @@ public abstract class StringProcessorTest {
         List<String> expected = Arrays.asList("d", "c");
         Assert.assertEquals(result, expected);
     }
+
+    //is it should be a test without assert?
+    @Test
+    public void testFindFrequentStringPerformanceTest(){
+        RandomStringsGenerator generator = new RandomStringsGenerator();
+        List<String>strings = generator.generate(100_000);
+        long startTime = System.currentTimeMillis();
+        processor.findFrequentStrings(strings, 20, 500);
+        long finishTime = System.currentTimeMillis();
+        long elapsedTime = finishTime - startTime;
+        //should we log it to the file?
+        System.out.println("Search time = " + elapsedTime + " ms");
+    }
 }
